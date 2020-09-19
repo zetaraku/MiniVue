@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      font-size: 24px;
+    }
+    div {
+      padding: 25px;
+    }
+  </style>
+  <title>hello-js</title>
+</head>
+<body>
+  <!-- start of template -->
+  <div id="app1">
+    <input type="number" id="dividend" min="0">
+    /
+    <input type="number" id="divisor" min="1">
+    =
+    <input type="number" id="quotient" disabled>
+    ...
+    <input type="number" id="remainder" disabled>
+    <span id="divisibleIndicator"></span>
+    <button onclick="randomizeNumber()">Randomize Number!</button>
+  </div>
+  <!-- end of template -->
+
+  <script>
+    let dom = getDOMElements();
+    addListeners();
+    initializeView();
+
+    function getDOMElements() {
+      return {
+        dividend: document.getElementById('dividend'),
+        divisor: document.getElementById('divisor'),
+        quotient: document.getElementById('quotient'),
+        remainder: document.getElementById('remainder'),
+        divisibleIndicator: document.getElementById('divisibleIndicator'),
+      };
+    }
+
+    function addListeners() {
+      dom.dividend.addEventListener('input', updateView);
+      dom.divisor.addEventListener('input', updateView);
+    }
+
+    function initializeView() {
+      dom.dividend.value = 42;
+      dom.divisor.value = 5;
+      updateView();
+    }
+
+    function updateView(event) {
+      dom.quotient.value = Math.floor(Number(dividend.value) / Number(divisor.value));
+      dom.remainder.value = Number(dividend.value) % Number(divisor.value);
+      dom.divisibleIndicator.innerText = Number(remainder.value) === 0 ? ' :) ' : ' :( ';
+    }
+
+    function randomizeNumber() {
+      dom.dividend.value = Math.floor(Math.random() * 500);
+      dom.divisor.value = Math.floor(1 + Math.random() * 50);
+      updateView();
+    }
+  </script>
+</body>
+</html>

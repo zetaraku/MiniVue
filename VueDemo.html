@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      font-size: 24px;
+    }
+    div {
+      padding: 25px;
+    }
+  </style>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <script src="./mini-vue.js"></script>
+  <title>hello-vue</title>
+</head>
+<body>
+  <!-- start of template -->
+  <div id="app1">
+    <input type="number" v-model.number="dividend" min="0">
+    /
+    <input type="number" v-model.number="divisor" min="1">
+    =
+    <input type="number" v-model.number="quotient" disabled>
+    ...
+    <input type="number" v-model.number="remainder" disabled>
+    <span v-text="divisibleIndicator"></span>
+    <button v-on:click="randomizeNumber">Randomize Number!</button>
+  </div>
+  <div id="app2">
+    <input type="number" v-model.number="multiplierA">
+    *
+    <input type="number" v-model.number="multiplierB">
+    *
+    <input type="number" v-model.number="multiplierC">
+    =
+    <input type="number" v-model.number="product" disabled>
+    <span v-text="cubicNumberIndicator"></span>
+    <button v-on:click="randomizeCubicNumber">Randomize Number!</button>
+  </div>
+  <!-- end of template -->
+
+  <script>
+    let app1 = new Vue({
+      el: '#app1',
+      data: {
+        dividend: 42,
+        divisor: 5,
+      },
+      computed: {
+        quotient() {
+          return Math.floor(this.dividend / this.divisor);
+        },
+        remainder() {
+          return (this.dividend % this.divisor);
+        },
+        divisibleIndicator() {
+          return this.isDivisible ? ' :) ' : ' :( ';
+        },
+        isDivisible() {
+          return (this.remainder === 0);
+        },
+      },
+      methods: {
+        randomizeNumber() {
+          this.dividend = Math.floor(Math.random() * 500);
+          this.divisor = Math.floor(1 + Math.random() * 50);
+        },
+      },
+    });
+    let app2 = new Vue({
+      el: '#app2',
+      data() {
+        return {
+          multiplierA: 6,
+          multiplierB: 7,
+          multiplierC: 8,
+        };
+      },
+      computed: {
+        product() {
+          return Math.floor(this.multiplierA * this.multiplierB * this.multiplierC);
+        },
+        cubicNumberIndicator() {
+          return this.isCubicNumber ? ' :o ' : ' :) ';
+        },
+        isCubicNumber() {
+          return (Math.cbrt(this.product) % 1 === 0);
+        },
+      },
+      methods: {
+        randomizeCubicNumber() {
+          this.multiplierA = this.multiplierB = this.multiplierC = Math.floor(1 + Math.random() * 25);
+        },
+      },
+    });
+  </script>
+</body>
+</html>
